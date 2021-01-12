@@ -9,17 +9,11 @@ done
 
 if [[ "$os" == "fedora" ]]; then
   dnf upgrade
-  dnf install nano
 elif [[ "$os" == "centos" ]]; then
   yum update
-  yum install wget nano
 elif [[ "$os" == "debian" || "$os" == "ubuntu" ]]; then
   apt-get update
-  apt install wget nano
 fi
-
-wget https://git.io/JtvNq -O open-vpn-install.sh && bash open-vpn-install.sh
-
 
 # Detect Debian users running the script with "sh" instead of bash
 if readlink /proc/$$/exe | grep -q "dash"; then
