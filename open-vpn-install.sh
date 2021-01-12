@@ -3,7 +3,7 @@ while getopts g:p:d:c: flag; do
   g) protocol=${OPTARG} ;;
   p) port=${OPTARG} ;;
   d) dns=${OPTARG} ;;
-  c) unsanitized_client=${OPTARG} ;;
+  c) client=${OPTARG} ;;
   esac
 done
 
@@ -203,7 +203,7 @@ if [[ ! -e /etc/openvpn/server/server.conf ]]; then
   #echo "Enter a name for the first client:"
   #read -p "Name [client]: " unsanitized_client
   # Allow a limited set of characters to avoid conflicts
-  client=$(sed 's/[^0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-]/_/g' <<<"$unsanitized_client")
+  #client=$(sed 's/[^0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-]/_/g' <<<"$unsanitized_client")
   [[ -z "$client" ]] && client="client"
   echo
   echo "OpenVPN installation is ready to begin."
