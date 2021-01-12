@@ -333,6 +333,7 @@ group $group_name
 persist-key
 persist-tun
 status openvpn-status.log
+duplicate-cn
 verb 3
 crl-verify crl.pem" >>/etc/openvpn/server/server.conf
   if [[ "$protocol" == "udp" ]]; then
