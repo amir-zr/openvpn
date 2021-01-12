@@ -7,29 +7,6 @@ while getopts g:p:d:c: flag; do
   esac
 done
 
-if [[ "$os" == "fedora" ]]; then
-  dnf upgrade
-elif [[ "$os" == "centos" ]]; then
-  yum update
-elif [[ "$os" == "debian" || "$os" == "ubuntu" ]]; then
-  apt-get update
-fi
-
-# Detect Debian users running the script with "sh" instead of bash
-if readlink /proc/$$/exe | grep -q "dash"; then
-  echo 'This installer needs to be run with "bash", not "sh".'
-  exit
-fi
-
-# Discard stdin. Needed when running from an one-liner which includes a newline
-read -N 999999 -t 0.001
-
-# Detect OpenVZ 6
-if [[ $(uname -r | cut -d "." -f 1) -eq 2 ]]; then
-  echo "The system is running an old kernel, which is incompatible with this installer."
-  exit
-fi
-
 # Detect OS
 # $os_version variables aren't always in use, but are kept here for convenience
 if grep -qs "ubuntu" /etc/os-release; then
@@ -51,6 +28,29 @@ elif [[ -e /etc/fedora-release ]]; then
 else
   echo "This installer seems to be running on an unsupported distribution.
 Supported distributions are Ubuntu, Debian, CentOS, and Fedora."
+  exit
+fi
+
+if [[ "$os" == "fedora" ]]; then
+  dnf upgrade
+elif [[ "$os" == "centos" ]]; then
+  yum update
+elif [[ "$os" == "debian" || "$os" == "ubuntu" ]]; then
+  apt-get update
+fi
+
+# Detect Debian users running the script with "sh" instead of bash
+if readlink /proc/$$/exe | grep -q "dash"; then
+  echo 'This installer needs to be run with "bash", not "sh".'
+  exit
+fi
+
+# Discard stdin. Needed when running from an one-liner which includes a newline
+read -N 999999 -t 0.001
+
+# Detect OpenVZ 6
+if [[ $(uname -r | cut -d "." -f 1) -eq 2 ]]; then
+  echo "The system is running an old kernel, which is incompatible with this installer."
   exit
 fi
 
