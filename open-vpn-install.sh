@@ -1,7 +1,7 @@
-while getopts ptc:prt:d:c: flag; do
+while getopts g:p:d:c: flag; do
   case "${flag}" in
-  ptc) protocol=${OPTARG} ;;
-  prt) port=${OPTARG} ;;
+  g) protocol=${OPTARG} ;;
+  p) port=${OPTARG} ;;
   d) dns=${OPTARG} ;;
   c) unsanitized_client=${OPTARG} ;;
   esac
